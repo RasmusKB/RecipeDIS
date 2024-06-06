@@ -20,4 +20,4 @@ docker compose up --build\
 Here if you have a docker daemon, you can add the '-d' flag, to run it in the daemon.\
 \
 To start the frontend, navigate to the 'recipe-app' repository, and run 'npm run start' and you can then find the UI at:\
-http://localhost:3000\
+http://localhost:3000
