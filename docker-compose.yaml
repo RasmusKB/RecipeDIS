@@ -8,6 +8,11 @@ services:
             - postgres
         expose:
             - 8080
+        ports:
+            - 6001:6001
+            - 10001:10001
+        environment:
+            - DB_HOST=postgres
 
     recipe-app:
         build: ./recipe-app
