@@ -15,12 +15,18 @@ subprojects {
         mavenCentral()
     }
 
-    dependencies {
-        implementation("org.springframework.boot:spring-boot-starter")
-        testImplementation("org.springframework.boot:spring-boot-starter-test")
-    }
-
     tasks.withType<Test> {
         useJUnitPlatform()
+    }
+}
+
+tasks.register<Exec>("npmInstallRecipeApp") {
+    workingDir = file("recipe-app")
+    commandLine = listOf("npm", "install")
+}
+
+subprojects {
+    tasks.withType<JavaCompile> {
+        dependsOn(rootProject.tasks.named("npmInstallRecipeApp"))
     }
 }

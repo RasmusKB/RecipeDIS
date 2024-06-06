@@ -28,6 +28,7 @@ replay_pid*
 .settings
 .project
 .factorypath
+.DS_Store
 
 !/gradle/wrapper/gradle-wrapper.jar
 
