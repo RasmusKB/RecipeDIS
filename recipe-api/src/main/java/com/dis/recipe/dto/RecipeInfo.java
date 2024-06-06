@@ -9,10 +9,10 @@ import java.util.List;
 
 @Data
 @Builder
-public class Recipe {
+public class RecipeInfo {
     private String id;
-    private UserInfo createdBy;
+    private String createdBy;
     private BigInteger cookingTime;
     private String instructions;
-    private List<RecipeIngredient> ingredients;
+    private List<RecipeIngredientInfo> ingredients;
 }
