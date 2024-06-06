@@ -34,3 +34,7 @@ tasks.withType<Test> {
 tasks.withType<org.springframework.boot.gradle.tasks.bundling.BootJar> {
     mainClass.set("com.dis.recipe.Main")
 }
+
+tasks.named("build") {
+    dependsOn(tasks.named("bootJar"))
+}
