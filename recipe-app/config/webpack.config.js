@@ -69,10 +69,6 @@ if (TARGET === 'development' || !TARGET) {
                     context: settings.proxy.paths,
                     target: `http://localhost:${settings.proxy.port}`
                 },
-                {
-                    context: ['/admin'],
-                    target: 'http://localhost:3001'
-                }
             ]
         },
 

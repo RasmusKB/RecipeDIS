@@ -20,7 +20,9 @@ public class RecipeController {
 	private final RecipeService recipeService;
 
 	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public Recipe create(@RequestBody Recipe source) {
-		return recipeService.create(source);
+	public int create(@RequestBody Recipe source) {
+		Recipe test = recipeService.create(source);
+		System.out.println(test);
+		return 5;
 	}
 }
