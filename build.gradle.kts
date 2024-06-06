@@ -23,6 +23,8 @@ subprojects {
 tasks.register<Exec>("npmInstallRecipeApp") {
     workingDir = file("recipe-app")
     commandLine = listOf("npm", "install")
+    standardOutput = System.out
+    errorOutput = File("/dev/null").outputStream()
 }
 
 subprojects {
