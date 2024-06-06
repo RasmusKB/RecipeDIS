@@ -4,7 +4,7 @@ Node.js and npm (https://docs.npmjs.com/downloading-and-installing-node-js-and-n
 Docker Engine and docker compose\
 \
 To build the project and run any potential, you navigate to the root folder, and run the command:\
-./gradlew build \
+./gradlew build\
 
 To build the project with tests, you can run:\
 ./gradlew build -x test\
