@@ -1,17 +1,13 @@
-package dk.acto.commerce.recipe;
+package com.dis.recipe.dto;
 
 import lombok.Builder;
 import lombok.Data;
 
-import java.math.Instant;
-import java.util.List;
-
 @Data
 @Builder
-public class OrderInfo {
+public class RecipeIngredient {
     private String id;
-    private User createdBy;
-    private Int cookingTime;
-    private String instructions;
-    private List<RecipeIngredient> ingredients;
+	private String recipeId;
+	private String ingredientId;
+	private String quantity;
 }
