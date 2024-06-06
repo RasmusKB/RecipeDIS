@@ -1,6 +1,6 @@
 Things needed to run the project:\
-Java 21 (https://www.oracle.com/java/technologies/javase/jdk21-archive-downloads.html)\
-Node.js and npm (https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)\
+Java 21 (https://www.oracle.com/java/technologies/javase/jdk21-archive-downloads.html) \
+Node.js and npm (https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) \
 Docker Engine and docker compose\
 \
 To build the project and run any potential, you navigate to the root folder, and run the command:\
