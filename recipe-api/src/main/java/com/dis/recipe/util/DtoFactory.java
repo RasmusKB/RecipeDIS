@@ -18,6 +18,7 @@ public class DtoFactory {
 	public RecipeInfo toInfo(final Recipe source) {
 		return RecipeInfo.builder()
 			.id(source.getId())
+			.name(source.getName())
 			.createdBy(source.getCreatedBy())
 			.cookingTime(BigInteger.valueOf(source.getCookingTime()))
 			.instruction(source.getInstruction())

@@ -20,6 +20,7 @@ public class Recipe implements Serializable {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
+	private String name;
     private int cookingTime;
     private String instruction;
     private String createdBy;

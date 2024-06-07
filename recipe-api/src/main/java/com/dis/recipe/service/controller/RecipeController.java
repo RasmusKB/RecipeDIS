@@ -23,6 +23,12 @@ public class RecipeController {
         return recipeService.getAllRecipes();
     }
 
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public RecipeInfo getRecipeById(@PathVariable String id) {
+        RecipeInfo recipeInfo = recipeService.getRecipeById(id);
+        return recipeInfo;
+    }
+
 	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public RecipeInfo create(@RequestBody RecipeInfo source) {
 		return recipeService.create(source);
@@ -31,6 +37,11 @@ public class RecipeController {
     @DeleteMapping("/{id}")
     public void deleteRecipe(@PathVariable String id) {
         recipeService.deleteRecipe(id);
+        return;
+    }
+    @PutMapping("/{id}/name")
+    public void updateRecipeName(@PathVariable String id, @RequestParam String name) {
+        recipeService.updateRecipeName(id, name);
         return;
     }
 }

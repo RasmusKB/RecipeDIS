@@ -18,9 +18,13 @@ import java.util.List;
 public class RecipeIngredientController {
 	private final RecipeIngredientService recipeIngredientService;
 
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<RecipeIngredientInfo> getRecipeById(@PathVariable String id) {
+        return recipeIngredientService.getById(id);
+    }
+
 	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<RecipeIngredientInfo> create(@RequestBody List<RecipeIngredientInfo> source) {
 		return recipeIngredientService.create(source);
 	}
-
 }

@@ -28,19 +28,28 @@ public class RecipeService {
 					.collect(Collectors.toList());
 	}
 
+	public RecipeInfo getRecipeById(String id) {
+		return dtoFactory.toInfo(recipeDao.getRecipeById(id));
+	}
+
 	public RecipeInfo create(RecipeInfo recipe) {
         Recipe entity = Recipe.builder()
                 .id(UUID.randomUUID().toString())
+				.name(recipe.getName())
                 .cookingTime(recipe.getCookingTime().intValue())
                 .instruction(recipe.getInstruction())
                 .createdBy(recipe.getCreatedBy())
                 .build();
 
-        recipeDao.insertRecipe(entity.getId(), entity.getCookingTime(), entity.getInstruction(), entity.getCreatedBy());
+        recipeDao.insertRecipe(entity.getId(), entity.getName(), entity.getCookingTime(), entity.getInstruction(), entity.getCreatedBy());
 		return dtoFactory.toInfo(entity);
 	}
 
     public void deleteRecipe(String id) {
         recipeDao.deleteRecipeById(id);
+    }
+
+    public void updateRecipeName(String id, String name) {
+        recipeDao.updateRecipeNameById(id, name);
     }
 }

@@ -11,6 +11,7 @@ import java.util.List;
 @Builder
 public class RecipeInfo {
     private String id;
+	private String name;
     private String createdBy;
     private BigInteger cookingTime;
     private String instruction;

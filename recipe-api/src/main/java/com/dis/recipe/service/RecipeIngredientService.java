@@ -21,6 +21,14 @@ public class RecipeIngredientService {
 	private final RecipeIngredientDao recipeIngredientDao;
 	private final DtoFactory dtoFactory;
 
+	public List<RecipeIngredientInfo> getById(String id) {
+        return (Optional.ofNullable(recipeIngredientDao.findByRecipeId(id))
+					.stream()
+					.flatMap(Collection::stream)
+					.map(dtoFactory::toInfo)
+					.collect(Collectors.toList()));
+	}
+
 	public List<RecipeIngredientInfo> create(List<RecipeIngredientInfo> ingredients) {
         List<RecipeIngredient> entities =
 			ingredients.stream().map(recipeIngredient ->
@@ -41,5 +49,9 @@ public class RecipeIngredientService {
         });
 
         return entities.stream().map(dtoFactory::toInfo).collect(Collectors.toList());
+	}
+
+	public void deleteRecipeIngredientById(String id) {
+		recipeIngredientDao.deleteRecipeIngredintsById(id);
 	}
 }
