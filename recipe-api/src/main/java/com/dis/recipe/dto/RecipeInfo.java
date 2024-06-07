@@ -13,6 +13,5 @@ public class RecipeInfo {
     private String id;
     private String createdBy;
     private BigInteger cookingTime;
-    private String instructions;
-    private List<RecipeIngredientInfo> ingredients;
+    private String instruction;
 }

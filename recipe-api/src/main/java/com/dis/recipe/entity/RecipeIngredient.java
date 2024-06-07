@@ -18,14 +18,7 @@ public class RecipeIngredient implements Serializable {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
-
-    @ManyToOne
-    @JoinColumn(name = "recipe_id", nullable = false)
-    private Recipe recipe;
-
-    @ManyToOne
-    @JoinColumn(name = "ingredient_id", nullable = false)
-    private Ingredient ingredient;
-
-    private double quantity;
+    private String recipeId;
+    private String ingredientId;
+    private String quantity;
 }

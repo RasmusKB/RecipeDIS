@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpServletRequest;
 import java.math.BigInteger;
+import java.util.List;
 
 @Slf4j
 @RequestMapping("recipe")
@@ -17,10 +18,14 @@ import java.math.BigInteger;
 public class RecipeController {
 	private final RecipeService recipeService;
 
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<RecipeInfo> getAll() {
+        return recipeService.getAllRecipes();
+    }
+
 	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public int create(@RequestBody RecipeInfo source) {
-		RecipeInfo test = recipeService.create(source);
-		System.out.println(test);
-		return 5;
+	public RecipeInfo create(@RequestBody RecipeInfo source) {
+		return recipeService.create(source);
 	}
+
 }

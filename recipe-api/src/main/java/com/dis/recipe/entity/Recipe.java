@@ -21,10 +21,6 @@ public class Recipe implements Serializable {
     private String id;
 
     private int cookingTime;
-    private String instructions;
-    private String username;
-
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "recipe")
-    @ToString.Exclude
-    private List<RecipeIngredient> ingredients;
+    private String instruction;
+    private String createdBy;
 }

@@ -7,7 +7,7 @@ import lombok.Data;
 @Builder
 public class RecipeIngredientInfo {
     private String id;
-	private RecipeInfo recipe;
-	private IngredientInfo ingredientId;
+	private String recipeId;
+	private String ingredientId;
 	private String quantity;
 }

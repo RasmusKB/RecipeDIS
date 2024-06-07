@@ -1,42 +1,46 @@
 version: '3.7'
 
 services:
-    recipe-api:
-        build: ./recipe-api
-        container_name: recipe-api
-        depends_on:
-            - postgres
-        expose:
-            - 8080
-        ports:
-            - 6001:6001
-            - 10001:10001
-        environment:
-            - DB_HOST=postgres
+  recipe-api:
+    build: ./recipe-api
+    container_name: recipe-api
+    depends_on:
+      - postgres
+    expose:
+      - 8080
+    ports:
+      - 6001:6001
+      - 10001:10001
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=recipedis
+      - DB_USER=postgres
+      - DB_PASS=postgres
 
-    recipe-app:
-        build: ./recipe-app
-        container_name: recipe-app
-        expose:
-            - 8080
+  recipe-app:
+    build: ./recipe-app
+    container_name: recipe-app
+    expose:
+      - 8080
 
-    postgres:
-        image: postgres:10.4-alpine
-        container_name: recipe-postgres
-        ports:
-            - 5432:5432
-        environment:
-            - POSTGRES_PASSWORD=postgres
-            - POSTGRES_DB=recipedis
+  postgres:
+    image: postgres:10.4-alpine
+    container_name: recipe-postgres
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=recipedis
 
-    recipe-gateway:
-        build: recipe-gateway
-        container_name: recipe-gateway
-        depends_on:
-            - recipe-api
-            - recipe-app
-        links:
-            - recipe-api
-            - recipe-app
-        ports:
-            - "80:8080"
+  recipe-gateway:
+    build: recipe-gateway
+    container_name: recipe-gateway
+    depends_on:
+      - recipe-api
+      - recipe-app
+    links:
+      - recipe-api
+      - recipe-app
+    ports:
+      - "80:8080"

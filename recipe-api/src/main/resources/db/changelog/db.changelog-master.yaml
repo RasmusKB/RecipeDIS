@@ -1,0 +1,102 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: bnv301
+      changes:
+        - createTable:
+            tableName: recipe
+            columns:
+              - column:
+                  name: id
+                  type: varchar(36)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: cooking_time
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: instruction
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_by
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 2
+      author: bnv301
+      changes:
+        - createTable:
+            tableName: ingredient
+            columns:
+              - column:
+                  name: id
+                  type: varchar(36)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 3
+      author: bnv301
+      changes:
+        - createTable:
+            tableName: recipe_ingredient
+            columns:
+              - column:
+                  name: id
+                  type: varchar(36)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: recipe_id
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: ingredient_id
+                  type: varchar(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: quantity
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseTableName: recipe_ingredient
+            baseColumnNames: recipe_id
+            constraintName: fk_recipe_ingredient_recipe
+            referencedTableName: recipe
+            referencedColumnNames: id
+        - addForeignKeyConstraint:
+            baseTableName: recipe_ingredient
+            baseColumnNames: ingredient_id
+            constraintName: fk_recipe_ingredient_ingredient
+            referencedTableName: ingredient
+            referencedColumnNames: id
+
+  - changeSet:
+      id: 4
+      author: bnv301
+      changes:
+        - sql:
+            dbms: postgresql
+            sql: >
+              UPDATE public.databasechangelog
+              SET MD5SUM = '8:cd255a901ae88356fffbf093ac878e4a'
+              WHERE ID = '3'
+              AND AUTHOR = 'bnv301'
+              AND FILENAME = 'db/changelog/db.changelog-master.yaml';
