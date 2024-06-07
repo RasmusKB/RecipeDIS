@@ -39,4 +39,8 @@ public class RecipeService {
         recipeDao.insertRecipe(entity.getId(), entity.getCookingTime(), entity.getInstruction(), entity.getCreatedBy());
 		return dtoFactory.toInfo(entity);
 	}
+
+    public void deleteRecipe(String id) {
+        recipeDao.deleteRecipeById(id);
+    }
 }
