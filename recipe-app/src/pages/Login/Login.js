@@ -60,7 +60,7 @@ return (
 						<Grid item>
 							<Button
 								variant='contained'
-								style={{ backgroundColor: props.isSubmitting ? '#c0c0c0' : '#4050b5', color:'#ffffff' }}
+								style={{ backgroundColor: props.isSubmitting ? '#c0c0c0' : '#04a5e5', color:'#ffffff' }}
 								className={classes.button}
 								type='submit'
 								disabled={props.isSubmitting}>
