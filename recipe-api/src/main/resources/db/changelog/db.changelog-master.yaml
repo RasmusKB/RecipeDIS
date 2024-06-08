@@ -97,11 +97,27 @@ databaseChangeLog:
       id: 4
       author: bnv301
       changes:
-        - sql:
-            dbms: postgresql
-            sql: >
-              UPDATE public.databasechangelog
-              SET MD5SUM = '8:cd255a901ae88356fffbf093ac878e4a'
-              WHERE ID = '3'
-              AND AUTHOR = 'bnv301'
-              AND FILENAME = 'db/changelog/db.changelog-master.yaml';
+        - createTable:
+            tableName: userdis
+            columns:
+              - column:
+                  name: id
+                  type: varchar(36)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: password
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: email
+                  type: varchar(255)
+                  constraints:
+                    nullable: false

@@ -14,25 +14,36 @@ const FormikLoginPage = () => {
         actions.setSubmitting(true);
 
         axios.post('/api/user/login', {
-            email: values.username,
+            username: values.username,
             password: values.password,
         })
             .then((res) => {
+				console.log(res);
                 const response = res.data;
                 if (response.error) {
                     actions.setStatus('unauthorized');
                     return;
                 }
             })
-            .catch((error) => {
-                actions.setStatus('networkError');
-                console.error('Login error:', error);
-            })
-            .finally(() => {
-                actions.setSubmitting(false);
-            });
-    };
-
+			.catch((error) => {
+				if (error.response) {
+					if (error.response.status === 401) {
+						actions.setStatus('unauthorized');
+					} else {
+						actions.setStatus('networkError');
+					}
+				} else if (error.request) {
+					console.error('No response received:', error.request);
+					actions.setStatus('networkError');
+				} else {
+					console.error('Error', error.message);
+					actions.setStatus('networkError');
+				}
+			})
+			.finally(() => {
+				actions.setSubmitting(false);
+			});
+	}
     return (
         <Formik
             initialValues={initialValues}

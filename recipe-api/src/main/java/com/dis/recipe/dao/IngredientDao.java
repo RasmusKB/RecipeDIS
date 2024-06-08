@@ -10,16 +10,16 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface IngredientDao extends JpaRepository<Ingredient, String>{
-    @Query("select i from Ingredient i")
+    @Query(value = "SELECT * FROM Ingredient", nativeQuery = true)
     List<Ingredient> getAllIngredients();
 
-    @Query(value = "SELECT * FROM Ingredient WHERE id = :id", nativeQuery = true)
-    Ingredient getIngredientById(String Id); 
+    @Query(value = "SELECT * FROM Ingredient WHERE id = ?1", nativeQuery = true)
+    Ingredient getIngredientById(String Id);
 
     @Modifying
     @Transactional
     @Query(value = "INSERT INTO Ingredient (id, name) VALUES (?1, ?2)", nativeQuery = true)
-    void insertIngredient(String id, String name); 
+    void insertIngredient(String id, String name);
 
     @Modifying
     @Transactional

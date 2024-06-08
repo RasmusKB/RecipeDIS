@@ -49,7 +49,7 @@ public class UserService {
 		}
 		userDao.deleteById(id);
 	}
-	private UserInfo insertUser(UserInfo user) {
+	public UserInfo insertUser(UserInfo user) {
 		User entity = User.builder()
 				.id(UUID.randomUUID().toString())
 				.username(user.getUsername())
