@@ -20,7 +20,7 @@ public class UserController {
 		return userService.create(source);
 	}
 
-	@GetMapping(path = "/login",produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(path = "/login",produces = MediaType.APPLICATION_JSON_VALUE)
 	public UserInfo login(@RequestBody UserInfo userInfo) {
 		return userService.login(userInfo.getUsername(), userInfo.getPassword());
 	}
