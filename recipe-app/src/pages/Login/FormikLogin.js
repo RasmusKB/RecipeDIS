@@ -1,5 +1,6 @@
 import React from 'react';
 import { Formik } from 'formik';
+import axios from 'axios';
 import Login from './Login';
 
 const initialValues = {
@@ -11,8 +12,8 @@ const FormikLoginPage = () => {
 
     const handleSubmit = (values, actions) => {
         actions.setSubmitting(true);
-		/*
-        postJson('USERENDPOINT', {
+
+        axios.post('/api/user/login', {
             email: values.username,
             password: values.password,
         })
@@ -22,7 +23,6 @@ const FormikLoginPage = () => {
                     actions.setStatus('unauthorized');
                     return;
                 }
-                window.location.href = '/';
             })
             .catch((error) => {
                 actions.setStatus('networkError');
@@ -31,7 +31,6 @@ const FormikLoginPage = () => {
             .finally(() => {
                 actions.setSubmitting(false);
             });
-		*/
     };
 
     return (

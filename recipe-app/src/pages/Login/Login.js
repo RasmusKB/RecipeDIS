@@ -30,9 +30,9 @@ export default function LoginPage (props) {
     const getErrorMessage = () => {
         switch (props.status) {
             case 'unauthorized':
-                return 'INSERT ERRORMESSAGE';
+                return 'Username/Password was incorrect.';
             case 'networkError':
-                return 'INSERT ERRORMESSAGE';
+                return 'A network error occurred, try again.';
             default:
                 return '';
         }
