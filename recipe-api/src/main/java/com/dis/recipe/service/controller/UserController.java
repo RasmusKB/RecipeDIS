@@ -18,10 +18,11 @@ public class UserController {
 	private final UserService UserService;
 
 	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public int create(@RequestBody UserInfo source) {
-	    UserInfo test = UserService.create(source);
-		System.out.println(test);
-		return 5;
+	// endpoint for creating user
+	public UserInfo create(@RequestBody UserInfo source) {
+	    UserInfo user = UserService.create(source);
+		System.out.println(user);
+		return user;
 	}
 }
 
