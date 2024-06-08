@@ -16,6 +16,9 @@ public interface UserDao extends JpaRepository<User, String>{
     @Query("select u from User u where u.email = ?1 or u.username = ?2")
     List<User> findUserByUsernameOrEmail(String username, String email);
 
+    @Query("select u from User u where u.username = ?1 and u.password = ?2")
+    List<User> findUserByUsernameAndEmail(String username, String password);
+
     @Modifying
     @Transactional
     @Query(value = "INSERT INTO User (id, username, password, email) VALUES (?1, ?2, ?3, ?4)", nativeQuery = true)
