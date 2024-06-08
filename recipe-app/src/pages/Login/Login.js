@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button'
 import makeStyles from '@material-ui/core/styles/makeStyles'
 import { Form, Field } from 'formik'
 import { TextField } from 'formik-material-ui'
+import { useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles(() => ({
     wrapper: {
@@ -26,6 +27,7 @@ const useStyles = makeStyles(() => ({
 
 export default function LoginPage (props) {
     const classes = useStyles()
+    const history = useHistory()
 
     const getErrorMessage = () => {
         switch (props.status) {
@@ -37,6 +39,10 @@ export default function LoginPage (props) {
                 return '';
         }
     };
+
+	const handleSignUp = () => {
+		history.push('/signup');
+	};
 
 return (
 		<Form>
@@ -72,7 +78,7 @@ return (
 								variant='contained'
 								style={{ backgroundColor: props.isSubmitting ? '#c0c0c0' : '#4050b5', color:'#ffffff' }}
 								className={classes.button}
-								type='submit'
+								onClick={handleSignUp}
 								disabled={props.isSubmitting}>
 								Sign up
 							</Button>
