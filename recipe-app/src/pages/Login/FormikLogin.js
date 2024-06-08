@@ -2,6 +2,7 @@ import React from 'react';
 import { Formik } from 'formik';
 import axios from 'axios';
 import Login from './Login';
+import { useHistory } from 'react-router-dom';
 
 const initialValues = {
     username: '',
@@ -9,6 +10,7 @@ const initialValues = {
 };
 
 const FormikLoginPage = () => {
+	const history = useHistory()
 
     const handleSubmit = (values, actions) => {
         actions.setSubmitting(true);
@@ -17,12 +19,8 @@ const FormikLoginPage = () => {
             username: values.username,
             password: values.password,
         })
-            .then((res) => {
-                const response = res.data;
-                if (response.error) {
-                    actions.setStatus('unauthorized');
-                    return;
-                }
+            .then(() => {
+				history.push('/frontpage')
             })
 			.catch((error) => {
 				if (error.response) {
