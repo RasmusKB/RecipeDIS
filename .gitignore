@@ -34,3 +34,4 @@ replay_pid*
 !/gradle/wrapper/gradle-wrapper.jar
 
 *.idea/*
+recipe-app/package-lock.json
