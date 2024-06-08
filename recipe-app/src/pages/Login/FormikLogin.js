@@ -9,7 +9,7 @@ const initialValues = {
     password: '',
 };
 
-const FormikLoginPage = () => {
+const FormikLogin = () => {
 	const history = useHistory()
 
     const handleSubmit = (values, actions) => {
@@ -51,4 +51,4 @@ const FormikLoginPage = () => {
     );
 };
 
-export default FormikLoginPage;
+export default FormikLogin;
