@@ -28,7 +28,11 @@ public class UserController {
 	// NOTE: post would probably be preferred since query params with username and password isn't the best lmao (we could also support email login
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public UserInfo login(@PathVariable String username, @PathVariable String password) {
-		return userService.login(username, password)
+		return userService.login(username, password);
 	}
+	@DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	public void deleteUser(@PathVariable String username, @PathVariable String password, @PathVariable String id) {
+        userService.deleteUser(username, password, id);
+    }
 }
 

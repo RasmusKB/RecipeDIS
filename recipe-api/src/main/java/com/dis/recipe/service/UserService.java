@@ -46,6 +46,13 @@ public class UserService {
 		}
 		return dtoFactory.toInfo(potentialUsers.get(0));
 	}
+	public void deleteUser(String username, String password, String id) {
+		List<User> potentialUser = userDao.findUserByIdAndUsernameAndPassword(id, username, password);
+		if (potentialUser.isEmpty()) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "The user could not be deleted.")
+		}
+		userDao.deleteById(id);
+	}
 	private UserInfo insertUser(UserInfo user) {
 		User entity = User.builder()
 				.id(UUID.randomUUID().toString())
