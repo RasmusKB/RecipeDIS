@@ -18,7 +18,6 @@ const FormikLoginPage = () => {
             password: values.password,
         })
             .then((res) => {
-				console.log(res);
                 const response = res.data;
                 if (response.error) {
                     actions.setStatus('unauthorized');
