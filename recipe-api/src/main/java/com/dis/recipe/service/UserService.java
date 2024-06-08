@@ -1,9 +1,7 @@
 package com.dis.recipe.service;
 
 import com.dis.recipe.dao.UserDao;
-import com.dis.recipe.dto.RecipeInfo;
 import com.dis.recipe.dto.UserInfo;
-import com.dis.recipe.entity.Recipe;
 import com.dis.recipe.entity.User;
 import com.dis.recipe.util.DtoFactory;
 import lombok.AllArgsConstructor;
@@ -33,14 +31,12 @@ public class UserService {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "A user with the provided user name or email already exists");
 		}
 
-		UserInfo user = insertUser(userInfo);
-		System.out.println("TEST");
-		return user;
+		return insertUser(userInfo);
 	}
 
 
 	public UserInfo login(String username, String password) {
-		List<User> potentialUsers = userDao.findUserByUsernameAndEmail(username, password);
+		List<User> potentialUsers = userDao.findUserByUsernameAndPassword(username, password);
 		if (potentialUsers.isEmpty()) {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "The username or password is not valid");
 		}

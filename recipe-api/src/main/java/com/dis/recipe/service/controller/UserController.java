@@ -7,8 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpServletRequest;
-import java.math.BigInteger;
 
 @Slf4j
 @RequestMapping("user")
@@ -17,22 +15,20 @@ import java.math.BigInteger;
 public class UserController {
 	private final UserService userService;
 
-	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	// endpoint for creating user
+	@PostMapping(path = "/create",produces = MediaType.APPLICATION_JSON_VALUE)
 	public UserInfo create(@RequestBody UserInfo source) {
-	    UserInfo user = userService.create(source);
-		System.out.println(user);
-		return user;
+		return userService.create(source);
 	}
 
-	// NOTE: post would probably be preferred since query params with username and password isn't the best lmao (we could also support email login
-	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public UserInfo login(@PathVariable String username, @PathVariable String password) {
-		return userService.login(username, password);
+	@GetMapping(path = "/login",produces = MediaType.APPLICATION_JSON_VALUE)
+	public UserInfo login(@RequestBody UserInfo userInfo) {
+		return userService.login(userInfo.getUsername(), userInfo.getPassword());
 	}
 	@DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public void deleteUser(@PathVariable String username, @PathVariable String password, @PathVariable String id) {
-        userService.deleteUser(username, password, id);
+	public void deleteUser(@RequestBody UserInfo userInfo) {
+        userService.deleteUser(userInfo.getUsername(), userInfo.getPassword(), userInfo.getId());
     }
 }
+
+
 

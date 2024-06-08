@@ -10,24 +10,23 @@ import java.util.List;
 
 public interface UserDao extends JpaRepository<User, String>{
 
-    @Query("select r from User r where r.username = ?1")
-    List<User> findRecipesByUsername(String username);
-
-    @Query("select u from User u where u.email = ?1 or u.username = ?2")
+    @Query(value = "SELECT * FROM User where username = ?1 or email = ?2", nativeQuery = true)
     List<User> findUserByUsernameOrEmail(String username, String email);
 
-    @Query("select u from User u where u.username = ?1 and u.password = ?2")
-    List<User> findUserByUsernameAndEmail(String username, String password);
+    //@Query(value = "select u from User u where u.username = ?1 and u.password = ?2", nativeQuery = true)
+    @Query(value = "SELECT * FROM User where username = ?1 AND password = ?2", nativeQuery = true)
+    List<User> findUserByUsernameAndPassword(String username, String password);
 
     @Modifying
     @Transactional
     @Query(value = "INSERT INTO User (id, username, password, email) VALUES (?1, ?2, ?3, ?4)", nativeQuery = true)
     void insert(String id, String username, String password, String email);
 
-    @Query("select u from User u where u.id = ?1 and u.username = ?2 and u.password = ?3")
+    @Query(value = "SELECT * FROM User WHERE id = ?1 AND username = ?2 AND password = ?3", nativeQuery = true)
     List<User> findUserByIdAndUsernameAndPassword(String id, String username, String password);
 
     @Modifying
-    @Query("delete from User u where u.id = ?1")
+    @Transactional
+    @Query(value = "DELETE FROM User WHERE id = ?1", nativeQuery = true)
     void deleteById(String id);
 }
