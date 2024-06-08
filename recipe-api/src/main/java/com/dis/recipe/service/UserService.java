@@ -49,7 +49,7 @@ public class UserService {
 	public void deleteUser(String username, String password, String id) {
 		List<User> potentialUser = userDao.findUserByIdAndUsernameAndPassword(id, username, password);
 		if (potentialUser.isEmpty()) {
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "The user could not be deleted.")
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "The user could not be deleted.");
 		}
 		userDao.deleteById(id);
 	}
