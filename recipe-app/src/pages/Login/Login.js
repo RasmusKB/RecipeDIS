@@ -13,9 +13,9 @@ const useStyles = makeStyles(() => ({
     },
     button: {
         width: 130,
-        marginTop: 50,
-        marginBottom: 50,
-        marginLeft: 'auto',
+        marginTop: 10,
+        marginBottom: 10,
+        marginLeft: '50',
         marginRight: 'auto'
     },
     buttonErrorText: {
@@ -30,43 +30,61 @@ export default function LoginPage (props) {
     const getErrorMessage = () => {
         switch (props.status) {
             case 'unauthorized':
-                return 'Forkert brugernavn/password. Prøv igen';
+                return 'Username/Password was incorrect.';
             case 'networkError':
-                return 'Netværksfejl. Prøv igen senere eller kontakt support.';
+                return 'A network error occurred, try again.';
             default:
                 return '';
         }
     };
 
-    return (
-        <Form>
-            <Grid container direction='column' alignItems='center' justifyContent='space-evenly' spacing={2} className={classes.wrapper}>
-                <Grid item>
-                    <Typography variant='h3' component='h1'> DIS project 2024 </Typography>
-                </Grid>
-                <Grid item>
-                    <Typography variant='h4' component='h2'> Log in </Typography>
-                </Grid>
-                <Grid item style={{ width: 400 }}>
-                    <Field
-                        component={TextField} variant='filled' name='username' label='Username' fullWidth
-                        margin='normal' id='username' />
-                    <Field
-                        component={TextField} variant='filled' name='password' type='password' label='Password'
-                        fullWidth margin='normal' id='password' />
-                </Grid>
-                <Grid item>
-                    <Button variant='contained' color='primary' className={classes.button} type='submit' disabled={props.isSubmitting}>
-                        Log ind
-                    </Button>
-                </Grid>
-
-                <Grid item>
-                    {props.status && (
-                        <Typography color='error'>{getErrorMessage()}</Typography>
-                    )}
-                </Grid>
-            </Grid>
-        </Form>
-    )
+return (
+		<Form>
+			<Grid container direction='column' alignItems='center' justifyContent='space-evenly' spacing={2} className={classes.wrapper}>
+				<Grid item>
+					<Typography variant='h3' component='h1'> DIS project 2024 </Typography>
+				</Grid>
+				<Grid item>
+					<Typography variant='h4' component='h2'> Login </Typography>
+				</Grid>
+				<Grid item style={{ width: 400 }}>
+					<Field
+						component={TextField} variant='filled' name='username' label='Username' fullWidth
+						margin='normal' id='username' />
+					<Field
+						component={TextField} variant='filled' name='password' type='password' label='Password'
+						fullWidth margin='normal' id='password' />
+				</Grid>
+				<Grid item>
+					<Grid container direction='column' alignItems='center' spacing={1}>
+						<Grid item>
+							<Button
+								variant='contained'
+								style={{ backgroundColor: props.isSubmitting ? '#c0c0c0' : '#04a5e5', color:'#ffffff' }}
+								className={classes.button}
+								type='submit'
+								disabled={props.isSubmitting}>
+								Login
+							</Button>
+						</Grid>
+						<Grid item>
+							<Button
+								variant='contained'
+								style={{ backgroundColor: props.isSubmitting ? '#c0c0c0' : '#4050b5', color:'#ffffff' }}
+								className={classes.button}
+								type='submit'
+								disabled={props.isSubmitting}>
+								Sign up
+							</Button>
+						</Grid>
+					</Grid>
+				</Grid>
+				<Grid item>
+					{props.status && (
+						<Typography color='error'>{getErrorMessage()}</Typography>
+					)}
+				</Grid>
+			</Grid>
+		</Form>
+	)
 }

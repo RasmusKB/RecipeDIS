@@ -38,18 +38,18 @@ public class UserService {
 	public UserInfo login(String username, String password) {
 		List<User> potentialUsers = userDao.findUserByUsernameAndPassword(username, password);
 		if (potentialUsers.isEmpty()) {
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "The username or password is not valid");
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "The username or password is not valid");
 		}
 		return dtoFactory.toInfo(potentialUsers.get(0));
 	}
 	public void deleteUser(String username, String password, String id) {
 		List<User> potentialUser = userDao.findUserByIdAndUsernameAndPassword(id, username, password);
 		if (potentialUser.isEmpty()) {
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "The user could not be deleted.");
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "The user could not be deleted.");
 		}
 		userDao.deleteById(id);
 	}
-	private UserInfo insertUser(UserInfo user) {
+	public UserInfo insertUser(UserInfo user) {
 		User entity = User.builder()
 				.id(UUID.randomUUID().toString())
 				.username(user.getUsername())

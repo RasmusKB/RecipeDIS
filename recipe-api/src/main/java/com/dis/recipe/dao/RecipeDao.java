@@ -9,10 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface RecipeDao extends JpaRepository<Recipe, String>{
-	@Query("select r from Recipe r")
+    @Query(value = "SELECT * FROM Recipe", nativeQuery = true)
     List<Recipe> getAllRecipes();
 
-    @Query("select r from Recipe r where r.id = ?1")
+    @Query(value = "SELECT * FROM Recipe WHERE id = ?1", nativeQuery = true)
     Recipe getRecipeById(String id);
 
     @Modifying
