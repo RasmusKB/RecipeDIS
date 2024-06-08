@@ -7,21 +7,28 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpServletRequest;
-import java.math.BigInteger;
 
 @Slf4j
 @RequestMapping("user")
 @RestController
 @AllArgsConstructor
 public class UserController {
-	private final UserService UserService;
+	private final UserService userService;
 
-	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public int create(@RequestBody UserInfo source) {
-	    UserInfo test = UserService.create(source);
-		System.out.println(test);
-		return 5;
+	@PostMapping(path = "/create",produces = MediaType.APPLICATION_JSON_VALUE)
+	public UserInfo create(@RequestBody UserInfo source) {
+		return userService.create(source);
 	}
+
+	@GetMapping(path = "/login",produces = MediaType.APPLICATION_JSON_VALUE)
+	public UserInfo login(@RequestBody UserInfo userInfo) {
+		return userService.login(userInfo.getUsername(), userInfo.getPassword());
+	}
+	@DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	public void deleteUser(@RequestBody UserInfo userInfo) {
+        userService.deleteUser(userInfo.getUsername(), userInfo.getPassword(), userInfo.getId());
+    }
 }
+
+
 
