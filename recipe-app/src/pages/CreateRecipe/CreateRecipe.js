@@ -101,6 +101,10 @@ export default function CreateRecipe(props) {
     };
 
     const handleAddNewIngredient = () => {
+        if (!sessionStorage.getItem('username')) {
+            setErrorMessage('You need to be logged in to add a new ingredient.');
+            return;
+        }
         if (newIngredient.trim() !== '') {
             axios.post('/api/ingredient', { name: newIngredient })
                 .then(response => {
@@ -220,7 +224,13 @@ export default function CreateRecipe(props) {
                                         <Button
                                             type="button"
                                             variant="contained"
-                                            onClick={() => push({ ingredientId: '', quantity: '' })}
+                                            onClick={() => {
+                                                if (sessionStorage.getItem('username')) {
+                                                    push({ ingredientId: '', quantity: '' });
+                                                } else {
+                                                    setErrorMessage('You need to be logged in to add an ingredient.');
+                                                }
+                                            }}
                                             className={classes.addButton}
                                         >
                                             Add Ingredient
