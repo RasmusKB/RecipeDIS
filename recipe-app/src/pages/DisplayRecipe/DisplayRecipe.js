@@ -215,7 +215,7 @@ export default function DisplayRecipe() {
                         margin="normal"
                         fullWidth
                         multiline
-                        rows={10}
+                        rows={15}
                     />
 				<Typography variant='h6' component='p' className={classes.subtitle}>
 					Ingredients:
