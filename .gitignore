@@ -35,3 +35,5 @@ replay_pid*
 
 *.idea/*
 recipe-app/package-lock.json
+
+recipe-api/bin/

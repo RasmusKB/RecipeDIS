@@ -25,10 +25,23 @@ const useStyles = makeStyles(() => ({
     },
     buttonErrorText: {
         width: '100%',
-        textAlign: 'center',
+        textAlign: 'center', 
         marginTop: 20,
     }
 }));
+
+const getErrorMessage = (status) => {
+    switch (status) {
+        case 'unauthorized':
+            return 'Invalid username/password. Try again';
+        case 'userExists':
+            return 'User already exists or email is invalid. Please try another username or email.';
+        case 'networkError':
+            return 'Network error. Try again later.';
+        default:
+            return '';
+    }
+};
 
 export default function Signup(props) {
     const classes = useStyles();
@@ -85,7 +98,7 @@ export default function Signup(props) {
                 <Grid item>
                     {props.status && (
                         <Typography color='error' className={classes.buttonErrorText}>
-                            {getErrorMessage()}
+                            {getErrorMessage(props.status)}
                         </Typography>
                     )}
                 </Grid>
