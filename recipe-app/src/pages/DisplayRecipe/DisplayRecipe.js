@@ -209,9 +209,14 @@ export default function DisplayRecipe() {
 				<Typography variant='h6' component='p' className={classes.subtitle}>
 					Instructions:
 				</Typography>
-				<Typography variant='h6' component='p' className={classes.subtitle}>
-					{recipe.instruction}
-				</Typography>
+                    <TextField
+                        value={recipe.instruction}
+                        variant="outlined"
+                        margin="normal"
+                        fullWidth
+                        multiline
+                        rows={10}
+                    />
 				<Typography variant='h6' component='p' className={classes.subtitle}>
 					Ingredients:
 				</Typography>
