@@ -19,7 +19,7 @@ public class RecipeIngredientController {
 	private final RecipeIngredientService recipeIngredientService;
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<RecipeIngredientInfo> getRecipeById(@PathVariable String id) {
+    public List<RecipeIngredientInfo> getRecipeIngredientsByRecipeId(@PathVariable String id) {
         return recipeIngredientService.getById(id);
     }
 

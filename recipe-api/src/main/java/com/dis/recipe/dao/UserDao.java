@@ -10,6 +10,9 @@ import java.util.List;
 
 public interface UserDao extends JpaRepository<User, String>{
 
+    @Query(value = "SELECT * FROM Userdis WHERE id = ?1", nativeQuery = true)
+    User getUserById(String id);
+
     @Query(value = "SELECT * FROM Userdis WHERE LOWER(username) = LOWER(?1) OR LOWER(email) = LOWER(?2)", nativeQuery = true)
     List<User> findUserByUsernameOrEmail(String username, String email);
 

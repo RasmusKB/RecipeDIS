@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import FrontPage from './pages/FrontPage'
+import DisplayRecipe from './pages/DisplayRecipe'
 
 
 
@@ -15,6 +16,7 @@ function App () {
 				<Route exact path='/' component={Login} />
 				<Route exact path='/signup' component={Signup} />
 				<Route exact path='/frontpage' component={FrontPage} />
+				<Route exact path='/recipe/:id' component={DisplayRecipe} />
 			</Switch>
 		</Router>
     )
