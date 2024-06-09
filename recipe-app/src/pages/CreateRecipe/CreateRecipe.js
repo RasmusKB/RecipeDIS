@@ -16,8 +16,8 @@ const useStyles = makeStyles(() => ({
         height: '100vh',
         width: '100vw',
         padding: '20px',
-        paddingLeft: '20%',
-        paddingRight: '20%',
+        paddingLeft: '5%',
+        paddingRight: '5%',
     },
     button: {
         width: 130,
@@ -47,7 +47,7 @@ const useStyles = makeStyles(() => ({
         width: '100%',
     },
     field: {
-        width: '30%',
+        width: '100%',
     },
     addButton: {
         marginTop: '20px',
@@ -68,15 +68,28 @@ const useStyles = makeStyles(() => ({
         marginRight: '10px',
     },
     selectField: {
-        marginTop: '32px', // Adjust this value to align the dropdown menu properly
+        marginTop: '32px',
+    },
+    newIngredientField: {
+        marginBottom: '20px',
+        display: 'flex',
+        alignItems: 'center',
+    },
+    newIngredientInput: {
+        marginRight: '0%',
     },
 }));
 
 export default function CreateRecipe() {
     const classes = useStyles();
     const [ingredients, setIngredients] = useState([]);
+    const [newIngredient, setNewIngredient] = useState('');
 
     useEffect(() => {
+        fetchIngredients();
+    }, []);
+
+    const fetchIngredients = () => {
         axios.get('/api/ingredient')
             .then(response => {
                 setIngredients(response.data);
@@ -84,112 +97,152 @@ export default function CreateRecipe() {
             .catch(error => {
                 console.error('Error fetching ingredients:', error);
             });
-    }, []);
+    };
+
+    const handleAddNewIngredient = () => {
+        if (newIngredient.trim() !== '') {
+            axios.post('/api/ingredient', { name: newIngredient })
+                .then(response => {
+                    setNewIngredient('');
+                    fetchIngredients();
+                })
+                .catch(error => {
+                    console.error('Error adding ingredient:', error);
+                });
+        }
+    };
 
     return (
         <Form className={classes.wrapper}>
             <Typography variant='h3' component='h1' className={classes.title}>
                 Create a Recipe
             </Typography>
-            <Grid container direction='column' spacing={2} className={classes.fieldContainer}>
-                <Grid container item spacing={2} className={classes.field}>
-                    <Grid item xs={8}>
-                        <Field
-                            component={TextField}
-                            name='title'
-                            label='Name of Recipe'
-                            variant='standard'
-                            margin='normal'
-                            fullWidth />
-                    </Grid>
-                    <Grid item xs={4} className={classes.selectField}>
-                        <Field
-                            component={Select}
-                            name='cookingTime'
-                            label='Cooking Time (minutes)'
-                            variant='standard'
-                            margin='normal'
-                            fullWidth
-                            displayEmpty
-                        >
-                            <MenuItem value="">
-                                Cooking Time (minutes)
-                            </MenuItem>
-                            <MenuItem value={5}>5 minutes</MenuItem>
-                            <MenuItem value={10}>10 minutes</MenuItem>
-                            <MenuItem value={15}>15 minutes</MenuItem>
-                            <MenuItem value={20}>20 minutes</MenuItem>
-                            <MenuItem value={30}>30 minutes</MenuItem>
-                            <MenuItem value={45}>45 minutes</MenuItem>
-                            <MenuItem value={60}>60 minutes</MenuItem>
-                            <MenuItem value={90}>90 minutes</MenuItem>
-                            <MenuItem value={120}>120 minutes</MenuItem>
-                        </Field>
+            <Grid container spacing={6}>
+                <Grid item xs={12} md={8}>
+                    <Grid container direction='column' spacing={2} className={classes.fieldContainer}>
+                        <Grid container item spacing={2} className={classes.field}>
+                            <Grid item xs={12} md={8}>
+                                <Field
+                                    component={TextField}
+                                    name='title'
+                                    label='Name of Recipe'
+                                    variant='standard'
+                                    margin='normal'
+                                    fullWidth />
+                            </Grid>
+                            <Grid item xs={12} md={4} className={classes.selectField}>
+                                <Field
+                                    component={Select}
+                                    name='cookingTime'
+                                    label='Cooking Time (minutes)'
+                                    variant='standard'
+                                    margin='normal'
+                                    fullWidth
+                                    displayEmpty
+                                >
+                                    <MenuItem value="">
+                                        Cooking Time (minutes)
+                                    </MenuItem>
+                                    <MenuItem value={5}>5 minutes</MenuItem>
+                                    <MenuItem value={10}>10 minutes</MenuItem>
+                                    <MenuItem value={15}>15 minutes</MenuItem>
+                                    <MenuItem value={20}>20 minutes</MenuItem>
+                                    <MenuItem value={30}>30 minutes</MenuItem>
+                                    <MenuItem value={45}>45 minutes</MenuItem>
+                                    <MenuItem value={60}>60 minutes</MenuItem>
+                                    <MenuItem value={90}>90 minutes</MenuItem>
+                                    <MenuItem value={120}>120 minutes</MenuItem>
+                                </Field>
+                            </Grid>
+                        </Grid>
+                        <Grid item className={classes.field}>
+                            <Field
+                                component={TextField}
+                                name='instructions'
+                                label='Instructions'
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                multiline
+                                rows={10}
+                            />
+                            <Field
+                                component={TextField}
+                                name='notes'
+                                label='Extra Notes / garnishes / etc.'
+                                variant='outlined'
+                                margin='normal'
+                                fullWidth
+                                multiline
+                                rows={4}
+                            />
+                            <Typography variant='h5' component='h1' className={classes.subtitle}>
+                                Add Ingredients
+                            </Typography>
+                            <FieldArray name="ingredients">
+                                {({ push, remove, form }) => (
+                                    <>
+                                        {form.values.ingredients.map((ingredient, index) => (
+                                            <div className={classes.ingredientRow} key={index}>
+                                                <Field
+                                                    component={Select}
+                                                    name={`ingredients[${index}].ingredientId`}
+                                                    displayEmpty
+                                                >
+                                                    <MenuItem value="" disabled>Select Ingredient</MenuItem>
+                                                    {ingredients.map((ingredient) => (
+                                                        <MenuItem key={ingredient.id} value={ingredient.id}>
+                                                            {ingredient.name}
+                                                        </MenuItem>
+                                                    ))}
+                                                </Field>
+                                                <Field
+                                                    component={TextField}
+                                                    name={`ingredients[${index}].quantity`}
+                                                    label="Quantity"
+                                                    className={classes.quantityField}
+                                                />
+                                                <IconButton onClick={() => remove(index)}>
+                                                    <RemoveIcon />
+                                                </IconButton>
+                                            </div>
+                                        ))}
+                                        <Button
+                                            type="button"
+                                            variant="contained"
+                                            onClick={() => push({ ingredientId: '', quantity: '' })}
+                                            className={classes.addButton}
+                                        >
+                                            Add Ingredient
+                                        </Button>
+                                    </>
+                                )}
+                            </FieldArray>
+                        </Grid>
                     </Grid>
                 </Grid>
-                <Grid item className={classes.field}>
-                    <Field
-                        component={TextField}
-                        name='instructions'
-                        label='Instructions'
-                        variant='outlined'
-                        margin='normal'
-                        fullWidth
-                        multiline
-                        rows={10}
-                    />
-                    <Field
-                        component={TextField}
-                        name='notes'
-                        label='Extra Notes / garnishes / etc.'
-                        variant='outlined'
-                        margin='normal'
-                        fullWidth
-                        multiline
-                        rows={4}
-                    />
+                <Grid item xs={12} md={3}>
                     <Typography variant='h5' component='h1' className={classes.subtitle}>
-                        Add Ingredients
+                        Add New Ingredient
                     </Typography>
-                    <FieldArray name="ingredients">
-                        {({ push, remove, form }) => (
-                            <>
-                                {form.values.ingredients.map((ingredient, index) => (
-                                    <div className={classes.ingredientRow} key={index}>
-                                        <Field
-                                            component={Select}
-                                            name={`ingredients[${index}].ingredientId`}
-                                            displayEmpty
-                                        >
-                                            <MenuItem value="" disabled>Select Ingredient</MenuItem>
-                                            {ingredients.map((ingredient) => (
-                                                <MenuItem key={ingredient.id} value={ingredient.id}>
-                                                    {ingredient.name}
-                                                </MenuItem>
-                                            ))}
-                                        </Field>
-                                        <Field
-                                            component={TextField}
-                                            name={`ingredients[${index}].quantity`}
-                                            label="Quantity"
-                                            className={classes.quantityField}
-                                        />
-                                        <IconButton onClick={() => remove(index)}>
-                                            <RemoveIcon />
-                                        </IconButton>
-                                    </div>
-                                ))}
-                                <Button
-                                    type="button"
-                                    variant="contained"
-                                    onClick={() => push({ ingredientId: '', quantity: '' })}
-                                    className={classes.addButton}
-                                >
-                                    Add Ingredient
-                                </Button>
-                            </>
-                        )}
-                    </FieldArray>
+                    <Field
+                        component={TextField}
+                        name='newIngredient'
+                        label='New Ingredient Name'
+                        variant='outlined'
+                        margin='normal'
+                        fullWidth
+                        value={newIngredient}
+                        onChange={(e) => setNewIngredient(e.target.value)}
+                        className={classes.newIngredientInput}
+                    />
+                    <Button
+                        variant="contained"
+                        onClick={handleAddNewIngredient}
+                        className={classes.addButton}
+                    >
+                        Add New Ingredient
+                    </Button>
                 </Grid>
             </Grid>
         </Form>

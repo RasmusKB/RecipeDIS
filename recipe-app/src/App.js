@@ -5,6 +5,7 @@ import Login from './pages/Login'
 import Signup from './pages/Signup'
 import FrontPage from './pages/FrontPage'
 import DisplayRecipe from './pages/DisplayRecipe'
+import CreateRecipe from './pages/CreateRecipe'
 
 
 
@@ -17,6 +18,7 @@ function App () {
 				<Route exact path='/signup' component={Signup} />
 				<Route exact path='/frontpage' component={FrontPage} />
 				<Route exact path='/recipe/:id' component={DisplayRecipe} />
+				<Route exact path='/create' component={CreateRecipe} />
 			</Switch>
 		</Router>
     )
