@@ -19,7 +19,6 @@ const FormikCreateRecipe = () => {
     const handleSubmit = (values, actions) => {
         actions.setSubmitting(true);
 
-        // Combine instructions and notes
         const combinedInstructions = `${values.instructions}\n\nNotes / Garnishes / Etc:\n${values.notes}`;
 
         axios.post('/api/recipe', {
