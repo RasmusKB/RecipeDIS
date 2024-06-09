@@ -16,8 +16,8 @@ public interface UserDao extends JpaRepository<User, String>{
     @Query(value = "SELECT * FROM Userdis WHERE LOWER(username) = LOWER(?1) OR LOWER(email) = LOWER(?2)", nativeQuery = true)
     List<User> findUserByUsernameOrEmail(String username, String email);
 
-    @Query(value = "SELECT * FROM Userdis WHERE LOWER(username) = LOWER(?1) AND password = ?2", nativeQuery = true)
-    List<User> findUserByUsernameAndPassword(String username, String password);
+    @Query(value = "SELECT * FROM Userdis WHERE LOWER(username) = LOWER(?1) OR LOWER(email) = LOWER(?1) AND password = ?2", nativeQuery = true)
+    List<User> findUserByUsernameOrEmailAndPassword(String username, String password);
 
     @Modifying
     @Transactional
