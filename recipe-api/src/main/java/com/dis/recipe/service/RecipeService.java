@@ -49,7 +49,15 @@ public class RecipeService {
         recipeDao.deleteRecipeById(id);
     }
 
-    public void updateRecipeName(String id, String name) {
-        recipeDao.updateRecipeNameById(id, name);
+    public void updateRecipeName(RecipeInfo recipe) {
+        Recipe entity = Recipe.builder()
+                .id(recipe.getId())
+				.name(recipe.getName())
+                .cookingTime(recipe.getCookingTime().intValue())
+                .instruction(recipe.getInstruction())
+                .createdBy(recipe.getCreatedBy())
+                .build();
+
+        recipeDao.updateRecipeNameById(entity.getId(), entity.getName());
     }
 }
