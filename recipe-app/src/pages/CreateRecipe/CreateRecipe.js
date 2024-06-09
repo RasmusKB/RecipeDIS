@@ -33,7 +33,7 @@ const useStyles = makeStyles(() => ({
     },
     buttonErrorText: {
         width: '100%',
-        textAlign: 'center', 
+        textAlign: 'center',
         marginTop: 20,
     },
     title: {
@@ -80,7 +80,7 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-export default function CreateRecipe() {
+export default function CreateRecipe(props) {
     const classes = useStyles();
     const [ingredients, setIngredients] = useState([]);
     const [newIngredient, setNewIngredient] = useState('');
@@ -124,10 +124,11 @@ export default function CreateRecipe() {
                             <Grid item xs={12} md={8}>
                                 <Field
                                     component={TextField}
-                                    name='title'
+                                    name='recipeName'
                                     label='Name of Recipe'
                                     variant='standard'
                                     margin='normal'
+                                    id='recipeName'
                                     fullWidth />
                             </Grid>
                             <Grid item xs={12} md={4} className={classes.selectField}>
@@ -137,6 +138,7 @@ export default function CreateRecipe() {
                                     label='Cooking Time (minutes)'
                                     variant='standard'
                                     margin='normal'
+                                    id='cookingTime'
                                     fullWidth
                                     displayEmpty
                                 >
@@ -162,6 +164,7 @@ export default function CreateRecipe() {
                                 label='Instructions'
                                 variant='outlined'
                                 margin='normal'
+                                id='instructions'
                                 fullWidth
                                 multiline
                                 rows={10}
@@ -245,6 +248,14 @@ export default function CreateRecipe() {
                     </Button>
                 </Grid>
             </Grid>
+			<Button
+				variant='contained'
+				style={{ backgroundColor: props.isSubmitting ? '#c0c0c0' : '#04a5e5', color:'#ffffff' }}
+				className={classes.button}
+				type='submit'
+				disabled={props.isSubmitting}>
+				Create
+			</Button>
         </Form>
     );
 }

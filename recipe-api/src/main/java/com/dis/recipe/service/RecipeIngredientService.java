@@ -33,6 +33,7 @@ public class RecipeIngredientService {
         List<RecipeIngredient> entities =
 			ingredients.stream().map(recipeIngredient ->
 				RecipeIngredient.builder()
+	                .id(UUID.randomUUID().toString())
 					.recipeId(recipeIngredient.getRecipeId())
 					.ingredientId(recipeIngredient.getIngredientId())
 					.quantity(recipeIngredient.getQuantity())

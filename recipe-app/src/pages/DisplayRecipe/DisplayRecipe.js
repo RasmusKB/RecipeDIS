@@ -53,6 +53,7 @@ export default function DisplayRecipe() {
     const history = useHistory();
 
     const [recipe, setRecipe] = useState(history.location.state?.recipeData);
+    const [recipeIngredients, setRecipeIngredients] = useState([]);
     const [ingredients, setIngredients] = useState([]);
     const [isCreator, setIsCreator] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -78,7 +79,16 @@ export default function DisplayRecipe() {
             if (recipe) {
                 try {
                     const response = await axios.get(`/api/recipeingredient/${recipe.id}`);
-                    setIngredients(response.data);
+                    setRecipeIngredients(response.data);
+
+                    const ingredientDetailsPromises = response.data.map(ingredient =>
+                        axios.get(`/api/ingredient/${ingredient.ingredientId}`)
+                    );
+
+                    const ingredientResponses = await Promise.all(ingredientDetailsPromises);
+                    const ingredient = ingredientResponses.map(res => res.data);
+
+                    setIngredients(ingredient);
                 } catch (error) {
                     console.error('Error fetching ingredients:', error);
                     setError(error);
@@ -208,13 +218,16 @@ export default function DisplayRecipe() {
                     <Typography>Loading ingredients...</Typography>
                 ) : error ? (
                     <Typography>Error loading ingredients</Typography>
-                ) : ingredients.length > 0 ? (
+                ) : recipeIngredients.length > 0 ? (
                     <List className={classes.subtitle}>
-                        {ingredients.map((ingredient, index) => (
-                            <ListItem key={index}>
-                                <ListItemText primary={`${ingredient.name}: ${ingredient.quantity}`} />
-                            </ListItem>
-                        ))}
+                        {recipeIngredients.map((recipeIngredient, index) => {
+                            const ingredientDetail = ingredients.find(ingredient => ingredient.id === recipeIngredient.ingredientId);
+                            return (
+                                <ListItem key={index}>
+                                    <ListItemText primary={`${ingredientDetail ? ingredientDetail.name : 'Unknown Ingredient'}: ${recipeIngredient.quantity}`} />
+                                </ListItem>
+                            );
+                        })}
                     </List>
                 ) : (
                     <Typography>No ingredients available</Typography>
