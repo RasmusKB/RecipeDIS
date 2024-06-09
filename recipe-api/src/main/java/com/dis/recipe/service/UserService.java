@@ -22,6 +22,10 @@ public class UserService {
 	private final UserDao userDao;
 	private final DtoFactory dtoFactory;
 
+	public UserInfo getUserById(String id) {
+		return dtoFactory.toInfo(userDao.getUserById(id));
+	}
+
 	public UserInfo create(UserInfo userInfo) {
 		if (!validateEmail(userInfo.getEmail())) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The email "+userInfo.getEmail()+" is not compliant");

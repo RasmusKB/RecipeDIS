@@ -19,7 +19,8 @@ const FormikLogin = () => {
             username: values.username,
             password: values.password,
         })
-            .then(() => {
+            .then((res) => {
+				sessionStorage.setItem('userId', res.data.id);
 				history.push('/frontpage')
             })
 			.catch((error) => {

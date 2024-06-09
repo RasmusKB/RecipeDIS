@@ -17,10 +17,10 @@ const useStyles = makeStyles(() => ({
         marginBottom: 50,
         marginLeft: 'auto',
         marginRight: 'auto',
-        backgroundColor: '#8839ef',
+        backgroundColor: '#4050b5',
         color: 'white',
         '&:hover': {
-            backgroundColor: '#8839ef',
+            backgroundColor: '#4050b5',
         },
     },
     buttonErrorText: {
@@ -50,47 +50,47 @@ export default function Signup(props) {
         <Form>
             <Grid container direction='column' alignItems='center' justifyContent='space-evenly' spacing={2} className={classes.wrapper}>
                 <Grid item>
-                    <Typography 
-                        variant='h3' 
+                    <Typography
+                        variant='h3'
                         component='h1'> DIS project 2024 </Typography>
                 </Grid>
                 <Grid item>
-                    <Typography 
-                        variant='h4' 
+                    <Typography
+                        variant='h4'
                         component='h2'> Sign Up </Typography>
                 </Grid>
                 <Grid item style={{ width: 400 }}>
                     <Field
-                        component={TextField} 
-                        variant='filled' 
-                        name='username' 
-                        label='Username' 
+                        component={TextField}
+                        variant='filled'
+                        name='username'
+                        label='Username'
                         fullWidth
-                        margin='normal' 
+                        margin='normal'
                         id='username' />
                     <Field
-                        component={TextField} 
-                        variant='filled' 
-                        name='email' 
-                        label='Email' 
+                        component={TextField}
+                        variant='filled'
+                        name='email'
+                        label='Email'
                         fullWidth
-                        margin='normal' 
-                        id='email' 
+                        margin='normal'
+                        id='email'
                         validate={() => {}} />
                     <Field
-                        component={TextField} 
-                        variant='filled' 
-                        name='password' 
-                        type='password' 
+                        component={TextField}
+                        variant='filled'
+                        name='password'
+                        type='password'
                         label='Password'
-                        fullWidth margin='normal' 
+                        fullWidth margin='normal'
                         id='password' />
                 </Grid>
                 <Grid item>
-                    <Button 
-                        variant='contained' 
-                        className={classes.button} 
-                        type='submit' 
+                    <Button
+                        variant='contained'
+                        className={classes.button}
+                        type='submit'
                         disabled={props.isSubmitting}>
                         Sign Up
                     </Button>
