@@ -3,7 +3,8 @@ The documentation that is required for the DIS 2024 hand-in requirements can be 
 Things needed to run the project:\
 Java 21 (https://www.oracle.com/java/technologies/javase/jdk21-archive-downloads.html) \
 Node.js and npm (https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) \
-Docker Engine and docker compose\
+Docker Engine (https://docs.docker.com/engine/install/)\
+docker compose (https://docs.docker.com/compose/install/)\
 A Unix based system(Mac, linux, WSL)\
 \
 To build and compile the project, you navigate to the root folder of this project, and run the command:\

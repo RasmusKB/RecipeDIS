@@ -2,8 +2,8 @@ Things needed to run the project:
 - A Unix based system(Mac, linux, WSL)
 - Java 21 (https://www.oracle.com/java/technologies/javase/jdk21-archive-downloads.html)
 - Node.js and npm (https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
-- Docker Engine
-- docker compose
+- Docker Engine (https://docs.docker.com/engine/install/)\
+- docker compose (https://docs.docker.com/compose/install/)\
 
 To build and compile the project, you navigate to the root folder, and run the command:
 ./gradlew build -x test
