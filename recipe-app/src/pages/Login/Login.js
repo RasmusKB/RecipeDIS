@@ -32,7 +32,7 @@ export default function LoginPage (props) {
     const getErrorMessage = () => {
         switch (props.status) {
             case 'unauthorized':
-                return 'Username/Password was incorrect.';
+                return 'Username/Email/Password was incorrect.';
             case 'networkError':
                 return 'A network error occurred, try again.';
             default:
@@ -55,7 +55,7 @@ return (
 				</Grid>
 				<Grid item style={{ width: 400 }}>
 					<Field
-						component={TextField} variant='filled' name='username' label='Username' fullWidth
+						component={TextField} variant='filled' name='username' label='Username/Email' fullWidth
 						margin='normal' id='username' />
 					<Field
 						component={TextField} variant='filled' name='password' type='password' label='Password'

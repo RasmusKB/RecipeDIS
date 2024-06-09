@@ -6,9 +6,10 @@ import axios from 'axios';
 
 const initialValues = {
     recipeName: '',
+	createdBy:sessionStorage.getItem('username'),
     instructions: '',
     cookingTime: '',
-    ingredients: [{ ingredientId: '', quantity: '' }], 
+	ingredients: [{recipeId: '', ingredientId: '', quantity: '' }],
 };
 
 const FormikCreateRecipe = () => {
@@ -16,15 +17,25 @@ const FormikCreateRecipe = () => {
 
     const handleSubmit = (values, actions) => {
         actions.setSubmitting(true);
+		console.log(values.ingredients);
 
         axios.post('/api/recipe', {
-            recipeName: values.recipeName,
-            instructions: values.instructions,
-            cookingTime: values.cookingTime,
-            ingredients: values.ingredients,
+			id: '',
+            name: values.recipeName,
+			createdBy: values.createdBy,
+            instruction: values.instructions,
+            cookingTime: values.cookingTime
         })
+            .then((res) => {
+                const updatedIngredients = values.ingredients.map(ingredient => ({
+                    ...ingredient,
+                    recipeId: res.data.id
+                }));
+
+                return axios.post('/api/recipeingredient', updatedIngredients);
+            })
             .then(() => {
-                history.push('/createrecipe');
+                history.push('/frontpage');
             })
             .catch(error => {
                 console.error('Error creating recipe:', error);

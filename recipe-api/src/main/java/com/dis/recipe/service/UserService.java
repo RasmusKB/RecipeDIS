@@ -40,7 +40,7 @@ public class UserService {
 
 
 	public UserInfo login(String username, String password) {
-		List<User> potentialUsers = userDao.findUserByUsernameAndPassword(username, password);
+		List<User> potentialUsers = userDao.findUserByUsernameOrEmailAndPassword(username, password);
 		if (potentialUsers.isEmpty()) {
 			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "The username or password is not valid");
 		}

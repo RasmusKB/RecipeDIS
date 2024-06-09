@@ -21,6 +21,7 @@ const FormikLogin = () => {
         })
             .then((res) => {
 				sessionStorage.setItem('userId', res.data.id);
+				sessionStorage.setItem('username', res.data.username);
 				history.push('/frontpage')
             })
 			.catch((error) => {
