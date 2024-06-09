@@ -43,7 +43,7 @@ const FormikCreateRecipe = () => {
 			})
 			.catch(error => {
 				if (error.response && error.response.status === 500) {
-					enqueueSnackbar('Two of the same ingredients were added to the recipe', { variant: 'error' });
+					enqueueSnackbar('Missing fields or two of the same ingredients were added to the recipe', { variant: 'error' });
 				} else {
 					enqueueSnackbar('An error occurred. Try again.', { variant: 'error' });
 				}
