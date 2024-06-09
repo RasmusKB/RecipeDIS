@@ -84,6 +84,7 @@ export default function CreateRecipe(props) {
     const classes = useStyles();
     const [ingredients, setIngredients] = useState([]);
     const [newIngredient, setNewIngredient] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
         fetchIngredients();
@@ -109,6 +110,12 @@ export default function CreateRecipe(props) {
                 .catch(error => {
                     console.error('Error adding ingredient:', error);
                 });
+        }
+    };
+
+    const handleCreateClick = () => {
+        if (!sessionStorage.getItem('username')) {
+            setErrorMessage('You need to be logged in to create a recipe.');
         }
     };
 
@@ -248,14 +255,21 @@ export default function CreateRecipe(props) {
                     </Button>
                 </Grid>
             </Grid>
-			<Button
-				variant='contained'
-				style={{ backgroundColor: props.isSubmitting ? '#c0c0c0' : '#04a5e5', color:'#ffffff' }}
-				className={classes.button}
-				type='submit'
-				disabled={props.isSubmitting}>
-				Create
-			</Button>
+            {errorMessage && (
+                <Typography color="error" className={classes.buttonErrorText}>
+                    {errorMessage}
+                </Typography>
+            )}
+            <Button
+                variant='contained'
+                style={{ backgroundColor: props.isSubmitting ? '#c0c0c0' : '#04a5e5', color:'#ffffff' }}
+                className={classes.button}
+                type='submit'
+                onClick={handleCreateClick}
+                disabled={props.isSubmitting}
+            >
+                Create
+            </Button>
         </Form>
     );
 }
