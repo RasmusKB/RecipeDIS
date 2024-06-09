@@ -22,10 +22,10 @@ const useStyles = makeStyles(() => ({
         alignItems: 'center',
     },
     button: {
-        backgroundColor: '#81c8be',
+        backgroundColor: '#04a5e5',
         color: 'white',
         '&:hover': {
-            backgroundColor: '#a6d189',
+            backgroundColor: '#04a5e5',
         },
         height: '56px',
         marginLeft: '20px',

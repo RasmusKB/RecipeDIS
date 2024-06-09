@@ -25,10 +25,10 @@ const useStyles = makeStyles(() => ({
         marginBottom: 50,
         marginLeft: 'auto',
         marginRight: 'auto',
-        backgroundColor: '#8839ef',
+        backgroundColor: '#4050b5',
         color: 'white',
         '&:hover': {
-            backgroundColor: '#8839ef',
+            backgroundColor: '#4050b5',
         },
     },
     buttonErrorText: {
@@ -51,10 +51,10 @@ const useStyles = makeStyles(() => ({
     },
     addButton: {
         marginTop: '20px',
-        backgroundColor: '#8839ef',
+        backgroundColor: '#4050b5',
         color: 'white',
         '&:hover': {
-            backgroundColor: '#8839ef',
+            backgroundColor: '#4050b5',
         },
     },
     ingredientRow: {
