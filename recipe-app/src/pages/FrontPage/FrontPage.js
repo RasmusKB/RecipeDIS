@@ -65,6 +65,12 @@ const FrontPage = ({ isSubmitting, status }) => {
     const [recipes, setRecipes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+	const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+    useEffect(() => {
+        const userId = sessionStorage.getItem('userId');
+        setIsLoggedIn(!!userId);
+    }, []);
 
     useEffect(() => {
         const fetchRecipes = async () => {
@@ -85,6 +91,10 @@ const FrontPage = ({ isSubmitting, status }) => {
         history.push(`/recipe/create`);
     };
 
+    const handleGoToLogin = () => {
+        history.push(`/`);
+    };
+
     const handleClick = (recipeData) => {
         history.push({
 			pathname: `/recipe/${recipeData.id}`,
@@ -93,7 +103,11 @@ const FrontPage = ({ isSubmitting, status }) => {
 
     };
 
-
+    const handleSignOut = () => {
+        sessionStorage.removeItem('userId');
+        sessionStorage.removeItem('username');
+        history.push('/');
+    };
 
     return (
         <div className={classes.wrapper}>
@@ -117,16 +131,24 @@ const FrontPage = ({ isSubmitting, status }) => {
                 </div>
             </Form> */}
             <Grid container className={classes.header}>
-                <Grid item xs={10}>
+                <Grid item xs={8}>
                     <Typography variant='h3' component='h1'>Recipes</Typography>
                 </Grid>
-                <Grid item xs={2} className={classes.addButtonContainer}>
+                <Grid item xs={4} className={classes.addButtonContainer}>
 					<Button
 						variant='contained'
 						className={classes.button}
-						onClick={handleAddClick}>
-						Create new recipe
+                        onClick={isLoggedIn ? handleAddClick : handleGoToLogin}>
+                        {isLoggedIn ? "Create new recipe" : "Return to login"}
 					</Button>
+                    {isLoggedIn && (
+                        <Button
+                            variant='contained'
+                            className={classes.button}
+                            onClick={handleSignOut}>
+                            Sign out
+                        </Button>
+                    )}
                 </Grid>
             </Grid>
             <div className={classes.recipeList}>

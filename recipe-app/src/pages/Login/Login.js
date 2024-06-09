@@ -44,6 +44,10 @@ export default function LoginPage (props) {
 		history.push('/signup');
 	};
 
+	const handleNoAccount = () => {
+		history.push('/frontpage');
+	};
+
 return (
 		<Form>
 			<Grid container direction='column' alignItems='center' justifyContent='space-evenly' spacing={2} className={classes.wrapper}>
@@ -81,6 +85,16 @@ return (
 								onClick={handleSignUp}
 								disabled={props.isSubmitting}>
 								Sign up
+							</Button>
+						</Grid>
+						<Grid item>
+							<Button
+								variant='contained'
+								style={{ backgroundColor: props.isSubmitting ? '#c0c0c0' : '#4050b5', color:'#ffffff' }}
+								className={classes.button}
+								onClick={handleNoAccount}
+								disabled={props.isSubmitting}>
+								Continue without account
 							</Button>
 						</Grid>
 					</Grid>
