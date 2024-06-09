@@ -6,10 +6,11 @@ import axios from 'axios';
 
 const initialValues = {
     recipeName: '',
-	createdBy:sessionStorage.getItem('username'),
+    createdBy: sessionStorage.getItem('username'),
     instructions: '',
+    notes: '',
     cookingTime: '',
-	ingredients: [{recipeId: '', ingredientId: '', quantity: '' }],
+    ingredients: [{ recipeId: '', ingredientId: '', quantity: '' }],
 };
 
 const FormikCreateRecipe = () => {
@@ -17,13 +18,15 @@ const FormikCreateRecipe = () => {
 
     const handleSubmit = (values, actions) => {
         actions.setSubmitting(true);
-		console.log(values.ingredients);
+
+        // Combine instructions and notes
+        const combinedInstructions = `${values.instructions}\n\nNotes / Garnishes / Etc:\n${values.notes}`;
 
         axios.post('/api/recipe', {
-			id: '',
+            id: '',
             name: values.recipeName,
-			createdBy: values.createdBy,
-            instruction: values.instructions,
+            createdBy: values.createdBy,
+            instruction: combinedInstructions,
             cookingTime: values.cookingTime
         })
             .then((res) => {
