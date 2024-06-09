@@ -7,8 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpServletRequest;
-import java.math.BigInteger;
 import java.util.List;
 
 @Slf4j
@@ -27,4 +25,10 @@ public class RecipeIngredientController {
 	public List<RecipeIngredientInfo> create(@RequestBody List<RecipeIngredientInfo> source) {
 		return recipeIngredientService.create(source);
 	}
+
+    @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public void deleteRecipeIngredientsByRecipeId(@PathVariable String id) {
+        recipeIngredientService.deleteById(id);
+		return;
+    }
 }

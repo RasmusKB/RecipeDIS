@@ -52,7 +52,7 @@ public class RecipeIngredientService {
         return entities.stream().map(dtoFactory::toInfo).collect(Collectors.toList());
 	}
 
-	public void deleteRecipeIngredientById(String id) {
+	public void deleteById(String id) {
 		recipeIngredientDao.deleteRecipeIngredintsById(id);
 	}
 }

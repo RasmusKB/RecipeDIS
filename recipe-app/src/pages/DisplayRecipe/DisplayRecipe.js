@@ -108,6 +108,7 @@ export default function DisplayRecipe() {
         const confirmDelete = window.confirm("Are you sure you want to delete this recipe?");
         if (confirmDelete) {
             try {
+                await axios.delete(`/api/recipeingredient/${recipe.id}`);
                 await axios.delete(`/api/recipe/${recipe.id}`);
                 history.push('/frontpage');
             } catch (error) {
