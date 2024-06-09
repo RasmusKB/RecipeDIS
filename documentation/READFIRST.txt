@@ -1,0 +1,17 @@
+Hello!
+
+This directory should contain all the information you'll need to compile, run, and interact with the webapp + ekstra.
+
+Our E/R diagram can be found in ER-diagram.png
+
+How to compile and run the app can be found in the file: compileAndRun.txt
+
+In the document: howToInteract.pdf - A guide on how to use our UI can be found, with corresponding pictures.
+
+I wanna finish off by adding a bit about the structure of the code, in case you want to browse it and check for requirements.
+
+The directory "recipe-api" contains all of our backend, "recipe-app" contains all of the frontend.
+
+To find our SQL queries, you'll have to check the classes appended by "Dao.java". Our API endpoints can be found in classes appended by "Controller.java". Anything we do to the data between endpoint and database can be found in classes appended by "Service.java".
+
+We have used RegEx for verification of email-addresses. This can be found in the class "UserService.java".

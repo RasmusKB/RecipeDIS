@@ -1,0 +1,22 @@
+Things needed to run the project:
+- A Unix based system(Mac, linux, WSL)
+- Java 21 (https://www.oracle.com/java/technologies/javase/jdk21-archive-downloads.html)
+- Node.js and npm (https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+- Docker Engine
+- docker compose
+
+To build and compile the project, you navigate to the root folder, and run the command:
+./gradlew build -x test
+
+After building, you can run the application by running the command:
+docker compose up --build
+
+Here if you have a docker daemon, you can add the '-d' flag, to run it in the daemon.
+
+To start the frontend, navigate to the 'recipe-app' directory, and run
+'npm run start'
+
+and you can then find the UI located at localhost:3000, where the initial page for login is located at:
+http://localhost:3000/
+
+When running docker compose up --build, the app will initialize the tables and everything in the database. The database will however be empty, as the data created for it is supposed to be user generated. For more on how to create recipes in the app, see howToInteract.pdf.
