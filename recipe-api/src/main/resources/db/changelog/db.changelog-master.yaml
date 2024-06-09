@@ -50,7 +50,12 @@ databaseChangeLog:
                   name: name
                   type: varchar(255)
                   constraints:
+                    unique: true
                     nullable: false
+        - addUniqueConstraint:
+            columnNames: name
+            tableName: ingredient
+            constraintName: unique_ingredient_name
 
   - changeSet:
       id: 3
@@ -63,17 +68,18 @@ databaseChangeLog:
                   name: id
                   type: varchar(36)
                   constraints:
-                    primaryKey: true
                     nullable: false
               - column:
                   name: recipe_id
                   type: varchar(36)
                   constraints:
+                    primaryKey: true
                     nullable: false
               - column:
                   name: ingredient_id
                   type: varchar(36)
                   constraints:
+                    primaryKey: true
                     nullable: false
               - column:
                   name: quantity

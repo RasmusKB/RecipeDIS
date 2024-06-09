@@ -7,9 +7,10 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import { Form, Field, FieldArray } from 'formik';
 import { TextField, Select } from 'formik-material-ui';
 import MenuItem from '@material-ui/core/MenuItem';
-import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import axios from 'axios';
+import { useSnackbar } from 'notistack';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles(() => ({
     wrapper: {
@@ -31,10 +32,27 @@ const useStyles = makeStyles(() => ({
             backgroundColor: '#4050b5',
         },
     },
+    buttonBottom: {
+        width: 130,
+        marginTop: 50,
+        marginBottom: 50,
+        marginLeft: '0px',
+        marginRight: '50px',
+        backgroundColor: '#4050b5',
+        color: 'white',
+        '&:hover': {
+            backgroundColor: '#4050b5',
+        },
+    },
     buttonErrorText: {
         width: '100%',
         textAlign: 'center',
         marginTop: 20,
+    },
+    buttonContainer: {
+        display: 'flex',
+        justifyContent: 'flex',
+        marginTop: 'auto',
     },
     title: {
         marginBottom: '20px',
@@ -81,10 +99,18 @@ const useStyles = makeStyles(() => ({
 }));
 
 export default function CreateRecipe(props) {
+	const history = useHistory();
     const classes = useStyles();
+    const { enqueueSnackbar } = useSnackbar()
     const [ingredients, setIngredients] = useState([]);
     const [newIngredient, setNewIngredient] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+        const userId = sessionStorage.getItem('userId');
+        setIsLoggedIn(!!userId);
+    }, []);
 
     useEffect(() => {
         fetchIngredients();
@@ -101,10 +127,6 @@ export default function CreateRecipe(props) {
     };
 
     const handleAddNewIngredient = () => {
-        if (!sessionStorage.getItem('username')) {
-            setErrorMessage('You need to be logged in to add a new ingredient.');
-            return;
-        }
         if (newIngredient.trim() !== '') {
             axios.post('/api/ingredient', { name: newIngredient })
                 .then(response => {
@@ -112,16 +134,18 @@ export default function CreateRecipe(props) {
                     fetchIngredients();
                 })
                 .catch(error => {
-                    console.error('Error adding ingredient:', error);
+					if (error.response && error.response.status === 500) {
+						enqueueSnackbar('Ingredient already exists', { variant: 'error' });
+					} else {
+						enqueueSnackbar('An error occurred. Try again.', { variant: 'error' });
+					}
                 });
         }
     };
 
-    const handleCreateClick = () => {
-        if (!sessionStorage.getItem('username')) {
-            setErrorMessage('You need to be logged in to create a recipe.');
-        }
-    };
+	const handleCancel = () => {
+		history.push('/frontpage');
+	}
 
     return (
         <Form className={classes.wrapper}>
@@ -258,10 +282,12 @@ export default function CreateRecipe(props) {
                     />
                     <Button
                         variant="contained"
+						style={{ backgroundColor: !isLoggedIn ? '#c0c0c0' : '#4050b5', color:'#ffffff' }}
                         onClick={handleAddNewIngredient}
                         className={classes.addButton}
+						disabled={!isLoggedIn}
                     >
-                        Add New Ingredient
+						{isLoggedIn ? "Add New Ingredient" : "You are not logged in"}
                     </Button>
                 </Grid>
             </Grid>
@@ -270,16 +296,25 @@ export default function CreateRecipe(props) {
                     {errorMessage}
                 </Typography>
             )}
-            <Button
-                variant='contained'
-                style={{ backgroundColor: props.isSubmitting ? '#c0c0c0' : '#04a5e5', color:'#ffffff' }}
-                className={classes.button}
-                type='submit'
-                onClick={handleCreateClick}
-                disabled={props.isSubmitting}
-            >
-                Create
-            </Button>
+            <Grid item xs={4} className={classes.buttonContainer}>
+				<Button
+					variant='contained'
+					style={{ backgroundColor: (props.isSubmitting || !isLoggedIn) ? '#c0c0c0' : '#04a5e5', color:'#ffffff' }}
+					className={classes.buttonBottom}
+					type='submit'
+					disabled={props.isSubmitting || !isLoggedIn}
+				>
+					{isLoggedIn ? "Create" : "You are not logged in"}
+				</Button>
+				<Button
+					variant='contained'
+					style={{ backgroundColor: props.isSubmitting ? '#c0c0c0' : '#e78284', color:'#ffffff' }}
+					className={classes.buttonBottom}
+					onClick={handleCancel}
+				>
+					Cancel
+				</Button>
+			</Grid>
         </Form>
     );
 }

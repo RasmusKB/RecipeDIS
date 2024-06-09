@@ -30,7 +30,7 @@ const useStyles = makeStyles(() => ({
         height: '56px',
         marginLeft: '20px',
     },
-    addButtonContainer: {
+    buttonContainer: {
         display: 'flex',
         justifyContent: 'flex-end',
         marginTop: 'auto',
@@ -134,7 +134,7 @@ const FrontPage = ({ isSubmitting, status }) => {
                 <Grid item xs={8}>
                     <Typography variant='h3' component='h1'>Recipes</Typography>
                 </Grid>
-                <Grid item xs={4} className={classes.addButtonContainer}>
+                <Grid item xs={4} className={classes.buttonContainer}>
 					<Button
 						variant='contained'
 						className={classes.button}
@@ -144,6 +144,7 @@ const FrontPage = ({ isSubmitting, status }) => {
                     {isLoggedIn && (
                         <Button
                             variant='contained'
+							style={{ backgroundColor: '#e78284' }}
                             className={classes.button}
                             onClick={handleSignOut}>
                             Sign out
