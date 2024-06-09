@@ -216,6 +216,9 @@ export default function DisplayRecipe() {
                         fullWidth
                         multiline
                         rows={15}
+                        InputProps={{
+                            readOnly: true,
+                        }}
                     />
 				<Typography variant='h6' component='p' className={classes.subtitle}>
 					Ingredients:
