@@ -7,8 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpServletRequest;
-import java.math.BigInteger;
 import java.util.List;
 
 @Slf4j
@@ -39,9 +37,9 @@ public class RecipeController {
         recipeService.deleteRecipe(id);
         return;
     }
-    @PutMapping("/{id}/name")
-    public void updateRecipeName(@PathVariable String id, @RequestParam String name) {
-        recipeService.updateRecipeName(id, name);
+    @PutMapping("/name")
+    public void updateRecipeName(@RequestBody RecipeInfo recipe) {
+        recipeService.updateRecipeName(recipe);
         return;
     }
 }

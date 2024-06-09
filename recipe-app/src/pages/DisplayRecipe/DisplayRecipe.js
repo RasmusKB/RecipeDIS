@@ -1,55 +1,64 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Typography, makeStyles, Grid, } from '@material-ui/core';
+import { Typography, makeStyles, Grid, IconButton, List, ListItem, ListItemText, TextField } from '@material-ui/core';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
+import CheckIcon from '@material-ui/icons/Check';
+import CloseIcon from '@material-ui/icons/Close';
 import axios from 'axios';
 
 const useStyles = makeStyles(() => ({
     wrapper: {
+        height: '100vh',
+        width: '100vw',
         padding: '20px',
-        paddingLeft: '100px',
-        paddingRight: '100px',
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
+		paddingLeft: 50,
+		paddingTop: 10
+    },
+    button: {
+        width: 130,
+        marginTop: 50,
+        marginBottom: 50,
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        backgroundColor: '#8839ef',
+        color: 'white',
+        '&:hover': {
+            backgroundColor: '#8839ef',
+        },
+    },
+    backButton: {
     },
     title: {
-        fontSize: '2.5rem',
-        fontWeight: 'bold',
-        marginBottom: '20px',
-    },
-    subtitleContainer: {
-        display: 'flex',
-        justifyContent: 'flex-start',
-        fontSize: '1rem',
-        color: '#555',
         marginBottom: '20px',
     },
     subtitle: {
-        fontSize: '1rem',
-        color: '#555',
+		fontSize: '1rem'
     },
-    instructions: {
-        fontSize: '1.2rem',
-        marginBottom: '20px',
+    editButton: {
+        marginLeft: '10px',
+        position: 'relative',
+        top: '50%',
+        transform: 'translateY(-25%)',
     },
-    ingredients: {
-        fontSize: '1.2rem',
-        '& li': {
-            marginBottom: '5px',
-        },
+    deleteButton: {
+        position: 'absolute',
+        right: '20px',
+        top: '20px',
     },
 }));
-
 export default function DisplayRecipe() {
     const classes = useStyles();
     const history = useHistory();
 
-    const [recipe] = useState(history.location.state?.recipeData);
+    const [recipe, setRecipe] = useState(history.location.state?.recipeData);
     const [ingredients, setIngredients] = useState([]);
     const [isCreator, setIsCreator] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [isEditing, setIsEditing] = useState(false);
+    const [newName, setNewName] = useState(recipe?.name || '');
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -81,41 +90,136 @@ export default function DisplayRecipe() {
         fetchIngredients();
     }, [recipe]);
 
+	const handleBack = () => {
+		history.push('/frontpage');
+	}
+
+    const handleDelete = async () => {
+        const confirmDelete = window.confirm("Are you sure you want to delete this recipe?");
+        if (confirmDelete) {
+            try {
+                await axios.delete(`/api/recipe/${recipe.id}`);
+                history.push('/frontpage');
+            } catch (error) {
+                console.error('Error deleting recipe:', error);
+            }
+        }
+    };
+
+    const handleEdit = () => {
+        setIsEditing(true);
+    };
+
+    const handleSave = async () => {
+        try {
+            await axios.put(`/api/recipe/name`, { ...recipe, name: newName });
+            setRecipe({ ...recipe, name: newName });
+            setIsEditing(false);
+        } catch (error) {
+            console.error('Error updating recipe:', error);
+        }
+    };
+
+    const handleCancel = () => {
+        setIsEditing(false);
+    };
+
     if (!recipe) {
-        return <p>No recipe data available.</p>;
+        return <Typography variant='h3' component='h1' className={classes.title}>
+					Recipe not available
+				</Typography>
     }
 
     return (
-		<div className={classes.wrapper}>
-			<Typography className={classes.title}>{recipe.name}</Typography>
-			<Grid container className={classes.subtitleContainer}>
-				<Grid item xs={6}>
-					<Typography variant="body1">Created by: {recipe.createdBy}</Typography>
-				</Grid>
-				<Grid item xs={6}>
-					<Typography variant="body1">Cooking Time: {recipe.cookingTime} minutes</Typography>
-				</Grid>
-			</Grid>
-			<Typography className={classes.instructions}>{recipe.instruction}</Typography>
-			<Typography variant="h6">Ingredients</Typography>
-			{loading ? (
-				<Typography>Loading ingredients...</Typography>
-			) : error ? (
-				<Typography>Error loading ingredients</Typography>
-			) : ingredients.length > 0 ? (
-				<ul className={classes.ingredients}>
-					{ingredients.map((ingredient, index) => (
-						<li key={index}>{ingredient.name}: {ingredient.quantity}</li>
-					))}
-				</ul>
-			) : (
-				<Typography>No ingredients available</Typography>
-			)}
-			{isCreator && (
-				<div>
-					<Typography>You are the creator of this recipe.</Typography>
-				</div>
-			)}
-		</div>
-	);
+        <Grid container className={classes.wrapper}>
+            <Grid item xs={12}>
+                <IconButton className={classes.backButton} onClick={handleBack}>
+                    <ArrowBackIcon />
+                </IconButton>
+                {isCreator && (
+                    <IconButton
+                        className={classes.deleteButton}
+						onClick={handleDelete}
+                    >
+                        <DeleteIcon />
+                    </IconButton>
+                )}
+                <Grid container alignItems="center">
+                    {isEditing ? (
+                        <>
+                            <TextField
+                                value={newName}
+                                onChange={(e) => setNewName(e.target.value)}
+                                variant="outlined"
+                                size="small"
+                                className={classes.title}
+                            />
+                            <IconButton
+                                className={classes.editButton}
+                                onClick={handleSave}
+                            >
+                                <CheckIcon />
+                            </IconButton>
+                            <IconButton
+                                className={classes.editButton}
+                                onClick={handleCancel}
+                            >
+                                <CloseIcon />
+                            </IconButton>
+                        </>
+                    ) : (
+                        <>
+                            <Typography variant='h3' component='h1' className={classes.title}>
+                                {recipe.name}
+                            </Typography>
+                            {isCreator && (
+                                <IconButton
+                                    className={classes.editButton}
+                                    onClick={handleEdit}
+                                >
+                                    <EditIcon />
+                                </IconButton>
+                            )}
+                        </>
+                    )}
+                </Grid>
+				<Grid container spacing={2}>
+                    <Grid item>
+                        <Typography variant='h6' component='p' className={classes.subtitle}>
+                            Created by: {recipe.createdBy}
+                        </Typography>
+                    </Grid>
+                    <Grid item>
+                        <Typography variant='h6' component='p' className={classes.subtitle}>
+                            Cooking time: {recipe.cookingTime} minutes
+                        </Typography>
+                    </Grid>
+                </Grid>
+				<Typography variant='h6' component='p' className={classes.subtitle}>
+					Instructions:
+				</Typography>
+				<Typography variant='h6' component='p' className={classes.subtitle}>
+					{recipe.instruction}
+				</Typography>
+				<Typography variant='h6' component='p' className={classes.subtitle}>
+					Ingredients:
+				</Typography>
+                {loading ? (
+                    <Typography>Loading ingredients...</Typography>
+                ) : error ? (
+                    <Typography>Error loading ingredients</Typography>
+                ) : ingredients.length > 0 ? (
+                    <List className={classes.subtitle}>
+                        {ingredients.map((ingredient, index) => (
+                            <ListItem key={index}>
+                                <ListItemText primary={`${ingredient.name}: ${ingredient.quantity}`} />
+                            </ListItem>
+                        ))}
+                    </List>
+                ) : (
+                    <Typography>No ingredients available</Typography>
+                )}
+            </Grid>
+        </Grid>
+    );
 }
